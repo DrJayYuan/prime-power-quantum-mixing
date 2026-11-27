@@ -68,4 +68,56 @@ theorem uniform_of_parity_moments {ι τ : Type*} [Fintype ι] [DecidableEq ι] 
   field_simp [show N + 1 ≠ 0 by linarith, ne_of_gt hN]
   ring
 
+/-- The eigenenergy of mode k of the n-site nearest-neighbor chain.
+    The physical mode index is k+1. -/
+noncomputable def modeEnergy (n : ℕ) (k : Fin n) : ℝ :=
+  2 * Real.cos (Real.pi * (k.val + 1) / (n + 1))
+
+/-- The (u,v) entry of the rank-one sine-mode projector. -/
+noncomputable def sineProjector (n : ℕ) (u v k : Fin n) : ℝ :=
+  2 / (n + 1) *
+    Real.sin (Real.pi * (u.val + 1) * (k.val + 1) / (n + 1)) *
+    Real.sin (Real.pi * (v.val + 1) * (k.val + 1) / (n + 1))
+
+/-- Site transition probability in the chain's sine spectral representation. -/
+noncomputable def pathProbability (n : ℕ) (u v : Fin n) (t : ℕ) : ℝ :=
+  readout (sineProjector n u v) (fun k => t * modeEnergy n k)
+
+/-- The natural-time theorem's conclusion in the sine spectral representation. -/
+def UniformReadout (n : ℕ) : Prop :=
+  ∃ (s : ℕ) (time : Fin s → ℕ) (weight : Fin s → ℝ),
+    s ≤ n^2 / 4 + 1 ∧
+    (∀ j, 0 < weight j) ∧ (∑ j, weight j) = 1 ∧
+    ∀ u v : Fin n, (∑ j, weight j * pathProbability n u v (time j)) = 1 / (n : ℝ)
+
+/-- A parity label on zero-based mode indices. Equality of the labels is
+    equivalent to equal parity of the physical indices. -/
+def modeParity {n : ℕ} (k : Fin n) : Bool := k.val % 2 == 0
+
+/-- A concrete version of the spectral reduction for the path. The two
+    sine-basis identities are stated as hypotheses so the remaining input
+    is explicit. -/
+theorem uniformReadout_of_schedule {n : ℕ} (hn : 0 < n) {s : ℕ}
+    (time : Fin s → ℕ) (weight : Fin s → ℝ)
+    (hsize : s ≤ n^2 / 4 + 1) (hw₀ : ∀ j, 0 < weight j) (hw₁ : ∑ j, weight j = 1)
+    (hDiag : ∀ u v : Fin n, (∑ k, sineProjector n u v k ^ 2) =
+      (2 + ((if u = v then 1 else 0) + (if u.val + v.val + 1 = n then 1 else 0) : ℝ)) /
+        (2 * (n + 1)))
+    (hSame : ∀ u v : Fin n, (∑ k, ∑ l, if modeParity k = modeParity l then
+        sineProjector n u v k * sineProjector n u v l else 0) =
+      ((if u = v then 1 else 0) + (if u.val + v.val + 1 = n then 1 else 0) : ℝ) / 2)
+    (hMom : ∀ k l : Fin n, (∑ t, weight t *
+        Real.cos ((time t : ℝ) * (modeEnergy n k - modeEnergy n l))) =
+      if k = l then 1 else if modeParity k = modeParity l then -(1/(n : ℝ)) else 0) :
+    UniformReadout n := by
+  refine ⟨s,time,weight,hsize,hw₀,hw₁,fun u v => ?_⟩
+  unfold pathProbability
+  apply uniform_of_parity_moments (n : ℝ)
+    ((if u = v then 1 else 0) + (if u.val + v.val + 1 = n then 1 else 0))
+    (by exact_mod_cast hn) modeParity
+  · exact hDiag u v
+  · exact hSame u v
+  · intro k l
+    simpa only [mul_sub] using hMom k l
+
 end PrimePowerMixing

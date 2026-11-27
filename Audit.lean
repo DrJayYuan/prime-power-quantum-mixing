@@ -1,10 +1,14 @@
 import PrimePowerMixing
 
 #print axioms PrimePowerMixing.vanishing_coefficients
+#print axioms PrimePowerMixing.vanishing_iff_blocks
 #print axioms PrimePowerMixing.withoutReplacement
 #print axioms PrimePowerMixing.momentWeights
 #print axioms PrimePowerMixing.EightSites.energyRelation
 #print axioms PrimePowerMixing.EightSites.blockConstraint
 #print axioms PrimePowerMixing.EightSites.cosineMoments
 #print axioms PrimePowerMixing.uniform_of_parity_moments
+#print axioms PrimePowerMixing.uniformReadout_of_schedule
+#print axioms PrimePowerMixing.barycenter_interior
 #print axioms PrimePowerMixing.finiteSchedule
+#print axioms PrimePowerMixing.exactSchedule_of_fullSupport

@@ -12,16 +12,16 @@ The manuscript proves that for a uniform quantum chain with $N=p^a-1$ sites, whe
 
 | File | Checked result |
 | --- | --- |
-| [Relations](PrimePowerMixing/Relations.lean) | A vanishing rational polynomial of degree below a prime power has identical coefficient blocks at a primitive root of that order. |
+| [Relations](PrimePowerMixing/Relations.lean) | A rational polynomial of degree below a prime power vanishes at a primitive root of that order exactly when its coefficient blocks are identical. |
 | [EightSiteRelations](PrimePowerMixing/EightSiteRelations.lean) | The four even-mode energies for the eight-site chain have just one independent rational relation. |
 | [Moments](PrimePowerMixing/Moments.lean) | The without-replacement correlation and exact positive weights for the two block laws and a zero-moment component. |
 | [EightSites](PrimePowerMixing/EightSites.lean) | An explicit 72-outcome phase ensemble with all 64 cosine moments verified, including its block constraint and the real trigonometric interpretation. |
-| [Readout](PrimePowerMixing/Readout.lean) | The finite spectral readout expansion and the implication from target parity moments and the two sine-basis identities to uniformity. |
-| [TimeTransfer](PrimePowerMixing/TimeTransfer.lean) | A convex-geometric transfer theorem from interior limiting moments to a positive finite law on integer times, with the Carathéodory support bound. |
+| [Readout](PrimePowerMixing/Readout.lean) | The path's spectral readout formula, the statement `UniformReadout`, and its derivation from a schedule with the target moments and the two sine-basis identities. |
+| [TimeTransfer](PrimePowerMixing/TimeTransfer.lean) | A full-support phase law has a barycenter in the relative interior in affine-hull coordinates. If the integer orbit is dense in the phase image, an exact finite schedule realizes that barycenter with the Carathéodory support bound. |
 
-The complete chain theorem is proved in the manuscript. Completing its Lean formalization requires the general sampling-law construction, the sine-basis identities, and proofs of the orbit-density and interior hypotheses for these chains. The concrete 17-time schedule uses a separate interval-arithmetic certificate.
+The complete chain theorem is proved in the manuscript. Completing its Lean formalization requires the general sampling-law construction, the sine-basis identities, and the identification of the integer-orbit closure for these chains. The concrete 17-time schedule uses a separate interval-arithmetic certificate.
 
-Lean 已核验上表中的引理，以及八格点相位分布的全部 64 个余弦矩。一般情形的抽样分布、正弦谱基恒等式、整数时间轨道稠密性及其凸包内部条件，仍需接成 Lean 主定理。17 个实际测量时刻的权重由独立的 Python 区间算术脚本检验。
+Lean 已核验上表中的引理，以及八格点相位分布的全部 64 个余弦矩。一般情形的抽样分布、正弦谱基恒等式及整数时间轨道闭包的刻画，仍需接成 Lean 主定理。17 个实际测量时刻的权重由独立的 Python 区间算术脚本检验。
 
 ## Reproduce / 复现
 
