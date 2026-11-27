@@ -1,6 +1,8 @@
 # Exact uniform mixing on odd-prime-power quantum paths
 
-[Research manuscript (PDF)](paper/prime-power-mixing.pdf) · [Editable manuscript](paper/prime-power-mixing.html) · [Lean proofs](PrimePowerMixing.lean) · [Build checks](../../actions)
+**Jing Yuan, ChatGPT**
+
+[Research manuscript (PDF)](paper/exact-uniform-mixing-on-odd-prime-power-quantum-paths.pdf) · [Editable manuscript](paper/exact-uniform-mixing-on-odd-prime-power-quantum-paths.html) · [Published versions](../../releases) · [Lean proofs](PrimePowerMixing.lean) · [Build checks](../../actions)
 
 The manuscript proves that for a uniform quantum chain with $N=p^a-1$ sites, where $p$ is an odd prime and *a* ≥ 2, a finite probability law on nonnegative integer readout times makes every transition probability exactly $1/N$ after averaging. The same law works for every initial site. It covers the odd-prime-power family left unresolved by [Kang's 2026 preprint](https://arxiv.org/abs/2609.14463).
 

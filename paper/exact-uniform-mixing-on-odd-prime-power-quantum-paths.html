@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Exact uniform mixing on odd-prime-power quantum paths</title>
+<meta name="author" content="Jing Yuan, ChatGPT">
+<style>
+@page { size: A4; margin: 18mm 21mm 16mm; }
+* { box-sizing: border-box; }
+:root { --ink:#19262d; --muted:#49636c; --accent:#245961; --rule:#bdcdcf; --paper:#f0f6f5; }
+body { margin:0; color:var(--ink); font:11.7pt/1.34 Cambria, Georgia, serif; }
+main { max-width:168mm; margin:auto; }
+.page { break-after:page; }
+.page:last-child { break-after:auto; }
+.running, .folio, th, .caption { font:600 8.7pt/1.4 Arial, sans-serif; color:var(--muted); }
+.running { letter-spacing:.8pt; border-bottom:1px solid var(--rule); padding-bottom:6pt; margin-bottom:13pt; }
+.folio { text-align:right; border-top:1px solid var(--rule); padding-top:6pt; margin-top:12pt; }
+h1 { font-size:30pt; line-height:1.04; margin:7pt 0 7pt; letter-spacing:-.45pt; }
+.byline { font-size:12pt; font-weight:600; color:var(--muted); margin:0 0 12pt; }
+h2 { font-size:20pt; line-height:1.11; margin:0 0 10pt; }
+h3 { font-size:13pt; color:var(--accent); margin:12pt 0 4pt; }
+p { margin:0 0 8pt; }
+.abstract { font-size:12.6pt; line-height:1.35; margin-bottom:12pt; }
+.box { background:var(--paper); border-left:2.5pt solid var(--accent); padding:8pt 10pt; margin:10pt 0; break-inside:avoid; }
+.box p:last-child { margin-bottom:0; }
+.eq { text-align:center; font:12pt/1.45 "Cambria Math", Cambria, serif; margin:8pt 0; break-inside:avoid; }
+.inline, .eq i { font-family:"Cambria Math", Cambria, serif; }
+.nowrap { white-space:nowrap; }
+sub, sup { font-size:73%; line-height:0; }
+sub { vertical-align:sub; }
+sup { vertical-align:super; }
+.over { text-decoration:overline; }
+.same { white-space:nowrap; }
+a { color:#20576a; }
+table { border-collapse:collapse; width:100%; margin:8pt 0; font-variant-numeric:tabular-nums; break-inside:avoid; }
+th { text-align:left; padding:5pt 7pt; background:var(--paper); border-bottom:1px solid var(--rule); }
+td { padding:4pt 7pt; border-bottom:1px solid #d8e2e2; }
+.numbers td, .numbers th { text-align:right; }
+.numbers th:nth-child(2n):not(:last-child), .numbers td:nth-child(2n):not(:last-child) { border-right:1px solid #d8e2e2; }
+figure { margin:8pt 0; break-inside:avoid; }
+.caption { font-weight:400; margin-top:3pt; color:var(--muted); }
+.refs { font-size:9.6pt; line-height:1.3; }
+.refs p { margin-bottom:4pt; }
+@media screen {
+  body { background:#e9efee; padding:12px; }
+  main { max-width:210mm; }
+  .page { background:white; padding:17mm 21mm; margin:14px auto; }
+}
+</style>
+</head>
+<body><main>
+<section class="page">
+<div class="running">EXACT UNIFORM MIXING · RESEARCH DRAFT · 28 NOVEMBER 2026</div>
+<h1>Exact uniform mixing on<br>odd-prime-power quantum paths</h1>
+<p class="byline">Jing Yuan, ChatGPT</p>
+<p class="abstract">Prepare a particle at a site, let it move along a uniform quantum chain, and measure its position once at a randomly drawn time. For chains of <i>N</i> = <i>p</i><sup><i>a</i></sup> − 1 sites, with <i>p</i> an odd prime and <i>a</i> ≥ 2, we prove that one finite distribution of integer readout times makes every site equally likely, irrespective of the starting site. At most <i>N</i>²/4 + 1 times are needed. For eight sites, we certify a schedule with 17 explicit times.</p>
+
+<h3>What is randomized in each run?</h3>
+<p>Fix one schedule before the experiment and use it for every starting site <i>v</i>. Uniformity means that, over repeated runs from any such <i>v</i>, the probability of reading each site <i>u</i> is 1/<i>N</i>.</p>
+<p>Let <i>A</i> be the adjacency matrix of the path <i>P</i><sub><i>N</i></sub>, with one unit of hopping strength on each edge and ℏ = 1. For Hamiltonian −<i>A</i>, write <i>U</i>(<i>t</i>) = exp(<i>itA</i>) and <i>M</i>(<i>t</i>)<sub><i>uv</i></sub> = |<i>U</i>(<i>t</i>)<sub><i>uv</i></sub>|². If the schedule draws <i>t</i><sub><i>j</i></sub> with probability <i>w</i><sub><i>j</i></sub>, the observed transition matrix is the weighted average of the matrices <i>M</i>(<i>t</i><sub><i>j</i></sub>).</p>
+<div class="box">
+<p><b>Theorem.</b> For an odd prime <i>p</i> and integer <i>a</i> ≥ 2, let <i>q</i> = <i>p</i><sup><i>a</i></sup> and <i>N</i> = <i>q</i> − 1. There are at most <i>N</i>²/4 + 1 nonnegative integer times <i>t</i><sub><i>j</i></sub> and positive weights <i>w</i><sub><i>j</i></sub> summing to 1 such that</p>
+<div class="eq">∑<sub><i>j</i></sub> <i>w</i><sub><i>j</i></sub> <i>M</i>(<i>t</i><sub><i>j</i></sub>) = <i>J</i>/<i>N</i>,</div>
+<p>where <i>J</i> is the all-ones matrix.</p>
+</div>
+
+<h3>Why work with phases?</h3>
+<p>Each energy mode is a standing-wave pattern on the chain. As time passes, the modes acquire different phases, and a site probability depends on how they interfere. Averaging over the readout time lets us tune their pairwise interference. The challenge is that one time fixes all the phases at once. We first design a distribution on the combinations that the phases can approach, then show how to reproduce its relevant averages exactly using finitely many actual times.</p>
+<p>Baptista, Coutinho and Marques constructed schedules for three and four sites [1]. Kang ruled out eleven sites [2] and later classified several families of lengths [3]. The composite odd prime powers treated here fall outside those families. We use Kang’s target for the average interference and construct a phase distribution using the prime-power energy relations.</p>
+<div class="folio">1 / 7</div>
+</section>
+
+<section class="page">
+<div class="running">EXACT UNIFORM MIXING · WORKED EXAMPLE</div>
+<h2>1. Start with eight sites</h2>
+<p>For eight sites, write <i>q</i> = 9. The four even-numbered modes have energies <span class="nowrap">α<sub><i>j</i></sub> = 2 cos(2π<i>j</i>/9)</span> for <i>j</i> = 1, 2, 3, 4. Their phases at time <i>t</i> are <span class="nowrap"><i>z</i><sub><i>j</i></sub> = exp(<i>it</i>α<sub><i>j</i></sub>)</span>. The odd-numbered modes have opposite energies and conjugate phases. For distinct modes, the target average cosine of the phase difference is −1/8 when both modes are even or both are odd, and zero when one is even and one is odd. Section 2 derives this target.</p>
+<p>Three of the even-mode phases are tied together. Put ζ = exp(2π<i>i</i>/9). The sum ζ + ζ⁴ + ζ⁷ is zero, so taking twice its real part gives α<sub>1</sub> + α<sub>2</sub> + α<sub>4</sub> = 0. Thus <span class="nowrap"><i>z</i><sub>1</sub><i>z</i><sub>2</sub><i>z</i><sub>4</sub> = 1</span>. Section 3 shows that this is the only independent constraint on the phases in the closure of the orbit. We can treat {1, 2, 4} as a group and leave <i>z</i><sub>3</sub> free.</p>
+
+<h3>Two ways to draw the phases</h3>
+<p>Let ω = exp(2π<i>i</i>/3). In the first draw, shuffle the three roots <span class="nowrap">{1, ω, ω²}</span> and assign them to the group’s three coordinates. Their product is 1. Two different members of the group have an average product <i>z</i><sub><i>j</i></sub><span class="over"><i>z</i><sub><i>k</i></sub></span> of −1/2, since the quotient is equally likely to be ω or ω². Draw the free phase independently from the same roots. Its mean is zero, so it has zero correlation with the group.</p>
+<p>The second draw supplies the missing negative correlation with the free phase. Give all three group members phase 1 and the free coordinate phase −1. The group product is still 1.</p>
+<table aria-label="Correlations under the two eight-site phase draws">
+<thead><tr><th>Phase draw</th><th>Two different group members</th><th>Group member and free phase</th></tr></thead>
+<tbody><tr><td>Shuffled roots</td><td>−1/2</td><td>0</td></tr>
+<tr><td>Group at 1, free phase at −1</td><td>1</td><td>−1</td></tr>
+<tr><td>Mixture with weights 4/5 and 1/5</td><td>−1/5</td><td>−1/5</td></tr></tbody>
+</table>
+<p>More weight on the second draw raises the first correlation and lowers the second. The weights in the last row are where the two correlations meet.</p>
+
+<h3>Why go past −1/8?</h3>
+<p>Multiply every coordinate by the same independent uniform cube root. This leaves the group product and all the correlations in the table unchanged. It also makes the averages of <i>z</i><sub><i>j</i></sub><i>z</i><sub><i>k</i></sub> zero because the multiplier is squared. These products control the opposite-parity moments.</p>
+<p>We now have a stronger negative correlation than needed. Use this draw with probability 5/8. With the remaining probability 3/8, draw independently uniform angles for <i>z</i><sub>1</sub>, <i>z</i><sub>2</sub> and <i>z</i><sub>3</sub>, and set <i>z</i><sub>4</sub> = (<i>z</i><sub>1</sub><i>z</i><sub>2</sub>)<sup>−1</sup>. This second component covers every allowed neighborhood and contributes zero to the off-diagonal moments. The resulting same-parity correlation is (5/8)(−1/5) = −1/8. Section 5 uses this extra spread to recover a finite schedule of actual times.</p>
+<div class="folio">2 / 7</div>
+</section>
+
+<section class="page">
+<div class="running">EXACT UNIFORM MIXING · SPECTRAL REDUCTION</div>
+<h2>2. Which averages give a uniform readout?</h2>
+<p>Let <i>q</i> = <i>N</i> + 1. The path has distinct energies θ<sub><i>k</i></sub> = 2 cos(π<i>k</i>/<i>q</i>) and orthonormal modes with components <span class="nowrap">ψ<sub><i>k</i></sub>(<i>u</i>) = (2/<i>q</i>)<sup>1/2</sup> sin(π<i>ku</i>/<i>q</i>)</span>, for 1 ≤ <i>k</i>, <i>u</i> ≤ <i>N</i>. Write <i>E</i><sub><i>k</i></sub> for the projector onto mode <i>k</i>, and ∘ for entrywise matrix multiplication. Expanding the spectral formula <i>U</i>(<i>t</i>) = ∑<sub><i>k</i></sub> exp(<i>it</i>θ<sub><i>k</i></sub>) <i>E</i><sub><i>k</i></sub> shows how the phase differences enter the measured probabilities.</p>
+<div class="eq">
+𝔼<i>M</i>(<i>t</i>) = <i>D</i> + ∑<sub><i>k</i> ≠ <i>l</i></sub> 𝔼 cos((θ<sub><i>k</i></sub> − θ<sub><i>l</i></sub>)<i>t</i>) (<i>E</i><sub><i>k</i></sub> ∘ <i>E</i><sub><i>l</i></sub>),
+<span class="nowrap"><i>D</i> = ∑<sub><i>k</i></sub> <i>E</i><sub><i>k</i></sub> ∘ <i>E</i><sub><i>k</i></sub>.</span>
+</div>
+<p>The sum is over ordered pairs. The sine terms cancel when the two indices are exchanged, leaving the cosines shown above.</p>
+
+<div class="box"><b>Sufficient moment condition.</b> To obtain the uniform matrix <i>J</i>/<i>N</i>, it suffices to give every pair of distinct same-parity modes average cosine −1/<i>N</i> and every opposite-parity pair average cosine 0. [3]</div>
+
+<h3>Proof of the sufficient condition</h3>
+<p>Let <i>R</i> be the reflection matrix taking site <i>u</i> to <i>q</i> − <i>u</i>, and let <i>I</i> be the identity. To compute <i>D</i><sub><i>uv</i></sub>, sum the product of squared sines in its definition. With <i>x</i> = π<i>ku</i>/<i>q</i> and <i>y</i> = π<i>kv</i>/<i>q</i>, the summand before the factor 1/<i>q</i>² is</p>
+<div class="eq">4 sin² <i>x</i> sin² <i>y</i> = 1 − cos(2<i>x</i>) − cos(2<i>y</i>) + ½ cos(2(<i>x</i> − <i>y</i>)) + ½ cos(2(<i>x</i> + <i>y</i>)).</div>
+<p>We can include <i>k</i> = 0 in the sum because the sine product there is zero. The cosine sum over <i>k</i> = 0, …, <i>q</i> − 1 is zero unless its frequency is a multiple of <i>q</i>, in which case it is <i>q</i>. The single-site frequencies <i>u</i> and <i>v</i> never qualify. The difference qualifies just when <i>u</i> = <i>v</i>, and the sum just when <i>u</i> + <i>v</i> = <i>q</i>. Hence <i>D</i> = (2<i>J</i> + <i>I</i> + <i>R</i>)/(2<i>q</i>).</p>
+<p>Reflection gives <i>R</i>ψ<sub><i>k</i></sub> = (−1)<sup><i>k</i>+1</sup>ψ<sub><i>k</i></sub>. The odd- and even-index projector sums are therefore <i>P</i><sub>odd</sub> = (<i>I</i> + <i>R</i>)/2 and <i>P</i><sub>even</sub> = (<i>I</i> − <i>R</i>)/2. Adding the two entrywise squares gives</p>
+<div class="eq">∑<sub><i>k</i> ≡ <i>l</i> (mod 2)</sub> <i>E</i><sub><i>k</i></sub> ∘ <i>E</i><sub><i>l</i></sub> = <i>P</i><sub>odd</sub> ∘ <i>P</i><sub>odd</sub> + <i>P</i><sub>even</sub> ∘ <i>P</i><sub>even</sub> = (<i>I</i> + <i>R</i>)/2.</div>
+<p>Subtract <i>D</i> from this sum to remove its diagonal pairs. Inserting the proposed moments into the expansion yields</p>
+<div class="eq">𝔼<i>M</i>(<i>t</i>) = <i>D</i> − (1/<i>N</i>) ((<i>I</i> + <i>R</i>)/2 − <i>D</i>) = (<i>q</i>/<i>N</i>)<i>D</i> − (<i>I</i> + <i>R</i>)/(2<i>N</i>) = <i>J</i>/<i>N</i>.</div>
+<div class="folio">3 / 7</div>
+</section>
+
+<section class="page">
+<div class="running">EXACT UNIFORM MIXING · ALLOWED PHASES</div>
+<h2>3. What can one clock reach?</h2>
+<p>We now find the general counterpart of the product constraint <i>z</i><sub>1</sub><i>z</i><sub>2</sub><i>z</i><sub>4</sub> = 1. Put <i>s</i> = <i>q</i>/<i>p</i>, <i>m</i> = (<i>q</i> − 1)/2 and ζ = exp(2π<i>i</i>/<i>q</i>). The even-mode energies are α<sub><i>j</i></sub> = θ<sub>2<i>j</i></sub> = ζ<sup><i>j</i></sup> + ζ<sup>−<i>j</i></sup> for 1 ≤ <i>j</i> ≤ <i>m</i>. The odd energies are the negatives, with θ<sub><i>q</i>−2<i>j</i></sub> = −α<sub><i>j</i></sub>.</p>
+<p>Each index <i>j</i> stands for the pair of residues ±<i>j</i> modulo <i>q</i>. Reduce these pairs modulo <i>s</i>. Each nonzero pair ±<i>r</i> gives a full block <i>B</i><sub><i>r</i></sub> of <i>p</i> indices, since either of the two residues has <i>p</i> lifts and the lifts pair off by sign. There are (<i>s</i> − 1)/2 full blocks. The indices divisible by <i>s</i> form one short block of size (<i>p</i> − 1)/2. Altogether there are <i>K</i> = (<i>s</i> + 1)/2 blocks.</p>
+
+<h3>The energy relations are block sums</h3>
+<p>For an integer relation ∑<sub><i>j</i></sub> <i>c</i><sub><i>j</i></sub>α<sub><i>j</i></sub> = 0, form <i>P</i>(<i>X</i>) = ∑<sub><i>j</i></sub> <i>c</i><sub><i>j</i></sub>(<i>X</i><sup><i>j</i></sup> + <i>X</i><sup><i>q</i>−<i>j</i></sup>). Its value at ζ is zero. The minimal polynomial of ζ over ℚ is</p>
+<div class="eq">Φ<sub><i>q</i></sub>(<i>X</i>) = 1 + <i>X</i><sup><i>s</i></sup> + <i>X</i><sup>2<i>s</i></sup> + ⋯ + <i>X</i><sup>(<i>p</i>−1)<i>s</i></sup>.</div>
+<p>Thus <i>P</i> = <i>Q</i>Φ<sub><i>q</i></sub> with deg <i>Q</i> &lt; <i>s</i>, since deg <i>P</i> &lt; <i>q</i>. Multiplication repeats the coefficients of <i>Q</i> in <i>p</i> disjoint stretches of length <i>s</i>. Every coefficient of <i>P</i> therefore depends only on its exponent modulo <i>s</i>. The residue-zero coefficient vanishes because <i>P</i>(0) = 0. Symmetry under exponent reversal <i>j</i> ↔ <i>q</i> − <i>j</i> identifies residues <i>r</i> and −<i>r</i>. It follows that <i>c</i><sub><i>j</i></sub> is constant on each full block and zero on the short block. Conversely, the polynomial for a single full-block sum is (<i>X</i><sup><i>r</i></sup> + <i>X</i><sup><i>s</i>−<i>r</i></sup>)Φ<sub><i>q</i></sub>. Hence those block sums generate all the integer relations.</p>
+
+<h3>From energy relations to allowed phase combinations</h3>
+<p>Let <i>T</i> be the set of unit phases with ∏<sub><i>j</i>∈<i>B</i></sub> <i>z</i><sub><i>j</i></sub> = 1 in every full block. The short block is free. By Kronecker’s approximation theorem, the orbit <i>z</i><sub><i>j</i></sub>(<i>t</i>) = exp(<i>it</i>α<sub><i>j</i></sub>) for integer <i>t</i> is dense in the compact subgroup determined by the relations <span class="nowrap">∑<sub><i>j</i></sub> <i>c</i><sub><i>j</i></sub>α<sub><i>j</i></sub> ∈ 2πℤ</span>. Here the sum is algebraic, so the transcendence of π forces it to be zero. The only constraints are therefore the full-block products, and the closure is <i>T</i>. Nonnegative integers give the same closure. In a compact group, positive powers recur arbitrarily close to the identity, so negative powers are limits of nonnegative ones.</p>
+<p>We can now design a distribution on <i>T</i> using the product constraints alone. Section 5 returns to the physical clock.</p>
+<div class="folio">4 / 7</div>
+</section>
+
+<section class="page">
+<div class="running">EXACT UNIFORM MIXING · GENERAL CONSTRUCTION</div>
+<h2>4. Generalize the two draws</h2>
+<p>We want the same correlation for every pair of distinct even-mode phases. The first draw makes it negative within a block. The second makes it negative across blocks. As in the eight-site example, a mixture balances the two.</p>
+<h3>First draw. Shuffle roots independently in each block</h3>
+<p>Put ω = exp(2π<i>i</i>/<i>p</i>). Draw each block’s coordinates without replacement from the <i>p</i> roots, in uniform order and independently between blocks. The product of all roots is ω<sup><i>p</i>(<i>p</i>−1)/2</sup> = 1, so every full block satisfies the constraint. Every coordinate has mean zero, giving zero correlation across blocks. Within a block, sum over the <i>p</i>(<i>p</i> − 1) ordered pairs of distinct roots. The sum over all pairs is zero, and the diagonal pairs contribute <i>p</i>, so the average over distinct pairs is −1/(<i>p</i> − 1). This applies to the short block as well whenever it has two or more coordinates.</p>
+<h3>Second draw. Give each block a common phase</h3>
+<p>The within-block correlation is now 1. We need the across-block correlation −<i>h</i> with <i>h</i> &gt; 1/(<i>s</i> − 1). If <i>s</i> = 3, use the eight-site choice 1 on the full block and −1 on the singleton, so <i>h</i> = 1. For <i>s</i> &gt; 3, build a multiset of <i>K</i> phases. Since 2<i>K</i> = <i>s</i> + 1 and <i>p</i> divides <i>s</i>, there are ⌊<i>K</i>/<i>p</i>⌋ complete copies of the <i>p</i> roots plus a remainder of (<i>p</i> + 1)/2 phases. Use the even powers <span class="nowrap">1, ω², ω⁴, …, ω<sup><i>p</i>−1</sup></span> for that remainder.</p>
+<div class="eq"><i>S</i> = 1 + ω² + ⋯ + ω<sup><i>p</i>−1</sup> = (1 − ω<sup><i>p</i>+1</sup>)/(1 − ω²) = 1/(1 + ω), &nbsp; |<i>S</i>| = 1/(2 cos(π/<i>p</i>)) ≤ 1.</div>
+<p>Here <i>S</i> is also the sum of the entire multiset because each complete copy sums to zero. Assign its entries to the blocks by a uniform random permutation. Each shared phase is a <i>p</i>th root, so each full block still has product 1. Summing over two distinct slots as above gives</p>
+<div class="eq">−<i>h</i> = (|<i>S</i>|² − <i>K</i>)/[<i>K</i>(<i>K</i> − 1)], &nbsp; <i>h</i> ≥ 1/<i>K</i> &gt; 1/(<i>s</i> − 1).</div>
+<h3>Balance the correlations and leave room for a uniform component</h3>
+<p>Choose the second draw with probability λ and the first with probability 1 − λ. The within-block correlation is λ − (1 − λ)/(<i>p</i> − 1) and the across-block correlation is −λ<i>h</i>. Equating them gives</p>
+<div class="eq">λ = 1/[<i>p</i> + (<i>p</i> − 1)<i>h</i>], &nbsp; <i>c</i> = λ<i>h</i> &gt; 1/(<i>ps</i> − 1) = 1/<i>N</i>,</div>
+<p>where the inequality follows by multiplying through by the positive denominators and using (<i>s</i> − 1)<i>h</i> &gt; 1. The common conjugate-pair correlation is −<i>c</i>. A common independent uniform <i>p</i>th root multiplier preserves this correlation and every full-block product. It makes all unconjugated pair means zero because the square of the multiplier has mean zero. Restoring the odd modes as conjugates, the resulting law has moment −<i>c</i> for distinct same-parity modes and 0 across parities.</p>
+<div class="folio">5 / 7</div>
+</section>
+
+<section class="page">
+<div class="running">EXACT UNIFORM MIXING · BACK TO READOUT TIMES</div>
+<h2>5. How approximation gives an exact schedule</h2>
+<p>Use the law from Section 4 with probability 1/(<i>Nc</i>) and the uniform law on <i>T</i> (normalized Haar measure) otherwise. One way to draw from the uniform law is to choose independent uniform angles for every free coordinate and all but one coordinate of each full block. Set the last one in each full block to make the product 1. This law gives positive probability to every nonempty open region of <i>T</i>.</p>
+<p>For distinct modes, the phase quotient is a nontrivial character of <i>T</i>. On the time orbit it is exp(<i>it</i>(θ<sub><i>k</i></sub> − θ<sub><i>l</i></sub>)), and the nonzero algebraic gap cannot be a multiple of 2π. A nontrivial character has zero Haar mean: translation leaves the mean unchanged while multiplying it by a phase different from 1. The mixture thus has the target moments of Section 2. Because <i>c</i> &gt; 1/<i>N</i>, its uniform component has strictly positive weight.</p>
+<p>Let <i>F</i>(<i>z</i>) list the real parts of the phase quotients for distinct modes. Since θ<sub><i>q</i>−<i>k</i></sub> = −θ<sub><i>k</i></sub>, the pairs (<i>k</i>, <i>l</i>) and (<i>q</i> − <i>l</i>, <i>q</i> − <i>k</i>) give the same coordinate. Keep the representatives <i>k</i> &lt; <i>l</i>, <i>k</i> + <i>l</i> ≤ <i>q</i>. The <i>m</i>(2<i>m</i> − 1) unordered pairs include <i>m</i> fixed pairs and the rest occur in twos. This leaves <i>m</i>² coordinates, with <i>m</i> = <i>N</i>/2.</p>
+<p>Every choice of readout time gives one point on this moment curve, and mixing times gives a convex combination of points. Let <i>C</i> = conv <i>F</i>(<i>T</i>), which is compact because <i>F</i>(<i>T</i>) is compact in finite dimension. The target <i>y</i> is the average of <i>F</i> under our mixture. If <i>y</i> were on the relative boundary, there would be a supporting hyperplane through it with some point of <i>C</i> strictly on one side. Some phase tuple, and hence an open neighborhood of it, would then map strictly to that side. Full support gives that neighborhood positive probability, moving the average strictly off the hyperplane. Thus <i>y</i> lies in the relative interior of <i>C</i>.</p>
+<figure>
+<svg viewBox="0 0 620 122" width="100%" role="img" aria-label="Two overlapping triangles around a fixed target. The second has slightly moved vertices and still contains the target.">
+<rect x="0" y="0" width="620" height="122" fill="#f0f6f5"/>
+<g fill="none" stroke-width="2">
+  <path d="M60 98 L151 13 L241 98 Z" stroke="#245961"/>
+  <path d="M380 98 L471 13 L561 98 Z" stroke="#8ea4a6" stroke-dasharray="5 4"/>
+  <path d="M389 91 L481 20 L553 106 Z" stroke="#245961"/>
+</g>
+<g fill="#245961">
+  <circle cx="60" cy="98" r="3.7"/><circle cx="151" cy="13" r="3.7"/><circle cx="241" cy="98" r="3.7"/>
+  <circle cx="389" cy="91" r="3.7"/><circle cx="481" cy="20" r="3.7"/><circle cx="553" cy="106" r="3.7"/>
+</g>
+<g fill="#b85235"><circle cx="151" cy="68" r="5"/><circle cx="471" cy="68" r="5"/></g>
+<g fill="#7c3828" font-family="Arial" font-size="13"><text x="161" y="73">target</text><text x="481" y="73">target</text></g>
+<path d="M286 61 h46 m-8 -7 8 7 -8 7" fill="none" stroke="#49636c" stroke-width="2"/>
+</svg>
+<figcaption class="caption">A two-dimensional illustration. Moving the vertices a little leaves the fixed target inside. Each replacement vertex may itself be a mixture of several actual times.</figcaption>
+</figure>
+<p>Choose a small simplex around <i>y</i> in the affine hull of <i>C</i>. Its vertices belong to <i>C</i>, so each is a finite mixture of phase-image points. By density and continuity, replace those points by nearby integer-time points. The resulting vertices stay in the same affine hull and can be made arbitrarily close. Since the original barycentric coordinates of <i>y</i> are all positive, sufficiently small changes keep <i>y</i> in the new simplex. This realizes the target exactly as a mixture of actual times. Carathéodory’s theorem reduces the mixture to at most <i>m</i>² + 1 times. The sufficient moment condition then gives <i>J</i>/<i>N</i>.</p>
+<div class="folio">6 / 7</div>
+</section>
+
+<section class="page">
+<div class="running">EXACT UNIFORM MIXING · REPRODUCIBLE SCHEDULE</div>
+<h2>6. Seventeen actual times for eight sites</h2>
+<p>Section 1 showed how to design an ideal phase distribution. The following table gives a separate, direct certificate for an integer schedule on <i>P</i><sub>8</sub>. The weights shown are rounded. The linear system below defines the exact weights.</p>
+<table class="numbers" aria-label="Certified eight-site readout schedule">
+<thead><tr><th>Time</th><th>Weight</th><th>Time</th><th>Weight</th><th>Time</th><th>Weight</th></tr></thead>
+<tbody>
+<tr><td>2</td><td>0.11234503</td><td>78</td><td>0.09623739</td><td>130</td><td>0.13908202</td></tr>
+<tr><td>7</td><td>0.05039032</td><td>81</td><td>0.06663498</td><td>132</td><td>0.03562239</td></tr>
+<tr><td>10</td><td>0.06189291</td><td>90</td><td>0.06382042</td><td>148</td><td>0.06504710</td></tr>
+<tr><td>30</td><td>0.04766072</td><td>105</td><td>0.02810742</td><td>155</td><td>0.03434751</td></tr>
+<tr><td>31</td><td>0.02390764</td><td>119</td><td>0.04521091</td><td>159</td><td>0.02022787</td></tr>
+<tr><td>66</td><td>0.02591849</td><td>126</td><td>0.08354685</td><td></td><td></td></tr>
+</tbody>
+</table>
+<h3>How the certificate works</h3>
+<p>Form the 17 × 17 matrix <i>B</i> with one column per listed time <i>t</i><sub><i>j</i></sub>. Its first row consists of ones. The remaining sixteen rows contain cos((θ<sub><i>k</i></sub> − θ<sub><i>l</i></sub>)<i>t</i><sub><i>j</i></sub>) for the representatives <i>k</i> &lt; <i>l</i>, <i>k</i> + <i>l</i> ≤ 9. Set the first entry of <i>b</i> to 1 and the remaining entries to −1/8 for same-parity pairs and 0 otherwise. Then <i>Bw</i> = <i>b</i> encodes both normalization and the desired moments.</p>
+<p>The verification script encloses the trigonometric entries in intervals. It rounds an approximate inverse <i>C</i> and weight vector <i>v</i> to exact dyadic rationals. With the infinity norm, the verified bounds are</p>
+<div class="eq">‖<i>I</i> − <i>CB</i>‖<sub>∞</sub> &lt; 1.3 × 10<sup>−11</sup>, &nbsp;&nbsp; ‖<i>w</i> − <i>v</i>‖<sub>∞</sub> &lt; 4.5 × 10<sup>−13</sup>.</div>
+<p>The first inequality implies that <i>CB</i> is invertible by the Neumann series, so <i>B</i> is invertible. The second follows by bounding <span class="nowrap">‖<i>C</i>(<i>b</i> − <i>Bv</i>)‖<sub>∞</sub></span> and dividing by <span class="nowrap">1 − ‖<i>I</i> − <i>CB</i>‖<sub>∞</sub></span>. Every exact weight exceeds 0.02022. A separate floating-point diagonalization and the dyadic weights gave a largest deviation of 3.81 × 10<sup>−13</sup> from 1/8 across all 64 entries. The general theorem bounds the number of settings. This example also specifies how long to wait at each setting.</p>
+<p>To reproduce the certificate from the repository root, run <code>python code/check_p8.py</code> with NumPy and mpmath. <a href="https://github.com/DrJayYuan/prime-power-quantum-mixing/blob/main/code/check_p8.py">Verification script</a>.</p>
+<h3>References</h3>
+<div class="refs">
+<p>[1] P. Baptista, G. Coutinho and V. Marques, “Unexpected Averages of Mixing Matrices” (2023). <a href="https://arxiv.org/abs/2308.16378">arXiv:2308.16378</a>.</p>
+<p>[2] M. Kang, “An Exact Obstruction to Uniform Average Mixing on <i>P</i><sub>11</sub>” (2026). <a href="https://arxiv.org/abs/2607.25490">arXiv:2607.25490</a>.</p>
+<p>[3] M. Kang, “Arithmetic of Bohr Frequencies Governs Uniform Mixing in Randomly Timed Quantum Spin Chains” (2026), especially the moment target and Theorems S18 and S24. <a href="https://arxiv.org/abs/2609.14463">arXiv:2609.14463</a>.</p>
+</div>
+<div class="folio">7 / 7</div>
+</section>
+</main></body>
+</html>
