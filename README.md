@@ -2,11 +2,11 @@
 
 [Research manuscript (PDF)](paper/prime-power-mixing.pdf) · [Editable manuscript](paper/prime-power-mixing.html) · [Lean proofs](PrimePowerMixing.lean) · [Build checks](../../actions)
 
-The manuscript proves that for a uniform quantum chain with $N=p^a-1$ sites, where $p$ is an odd prime and $a\ge2$, a finite probability law on nonnegative integer readout times makes every transition probability exactly $1/N$ after averaging. The same law works for every initial site. It covers the odd-prime-power family left unresolved by [Kang's 2026 preprint](https://arxiv.org/abs/2609.14463).
+The manuscript proves that for a uniform quantum chain with $N=p^a-1$ sites, where $p$ is an odd prime and *a* ≥ 2, a finite probability law on nonnegative integer readout times makes every transition probability exactly $1/N$ after averaging. The same law works for every initial site. It covers the odd-prime-power family left unresolved by [Kang's 2026 preprint](https://arxiv.org/abs/2609.14463).
 
 ## 中文摘要
 
-对 $N=p^a-1$ 个格点的均匀量子链，其中 $p$ 是奇素数、$a\ge2$，手稿证明存在一组有限的非负整数测量时刻及其抽样概率。每次实验独立抽一个时刻测量一次。无论粒子从哪个格点出发，任意格点最终被测到的平均概率都精确等于 $1/N$。对 8 格点链，手稿还给出一套有 17 个时刻的具体方案。
+对 $N=p^a-1$ 个格点的均匀量子链，其中 $p$ 是奇素数、*a* ≥ 2，手稿证明存在一组有限的非负整数测量时刻及其抽样概率。每次实验独立抽一个时刻测量一次。无论粒子从哪个格点出发，任意格点最终被测到的平均概率都精确等于 $1/N$。对 8 格点链，手稿还给出一套有 17 个时刻的具体方案。
 
 ## Lean 4 coverage / 形式化范围
 
