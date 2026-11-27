@@ -1,0 +1,30 @@
+name: Verify
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  lean:
+    name: Lean proofs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: leanprover/lean-action@ba3fdfe5c4476c925da13bf11a005ddb47e47aee # v1
+        env:
+          MATHLIB_CACHE_GET_URL: https://lakecache.blob.core.windows.net/mathlib4
+        with:
+          auto-config: 'false'
+          build: 'true'
+          use-mathlib-cache: 'true'
+          use-github-cache: 'false'
+      - run: lake env lean Audit.lean
+  interval:
+    name: Eight-site interval certificate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - run: python3 -m venv .venv
+      - run: .venv/bin/python -m pip install numpy==2.4.6 mpmath==1.3.0
+      - run: .venv/bin/python code/check_p8.py
